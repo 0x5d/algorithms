@@ -11,37 +11,30 @@ func Mergesort(nums []int) []int {
 	left := Mergesort(nums[:n/2])
 	right := Mergesort(nums[n/2:])
 	// sorted will hold the sorted elements.
-	var sorted []int
+	sorted := make([]int, n)
+	// i and j are indices for left and right, respectively.
+	var i, j int
 	// While there are still elements left to compare...
-	for len(left) > 0 && len(right) > 0 {
-		// If the first element of left is less or equal than the first element of right,
-		if left[0] <= right[0] {
-			// append it to sorted,
-			sorted = append(sorted, left[0])
-			// remove it from left (assign to left its "last" elements), as we've already checked it.
-			left = rest(left)
+	for i < len(left) && j < len(right) {
+		// If the current element of 'left' is less or equal than the current element of 'right',
+		if left[i] <= right[j] {
+			// it goes into 'sorted' first.
+			sorted[i+j] = left[i]
+			i++
 		} else {
-			// Else, append the first element of right and
-			sorted = append(sorted, right[0])
-			// remove it from right.
-			right = rest(right)
+			// Else, the element from 'right' goes first.
+			sorted[i+j] = right[j]
+			j++
 		}
 	}
-	// There might still be unchecked elements in left or right, so append them to sorted.
-	for len(left) > 0 {
-		sorted = append(sorted, left[0])
-		left = rest(left)
+	// There might still be unchecked elements in 'left' or 'right', so add them to sorted.
+	for i < len(left) {
+		sorted[i+j] = left[i]
+		i++
 	}
-	for len(right) > 0 {
-		sorted = append(sorted, right[0])
-		right = rest(right)
+	for j < len(right) {
+		sorted[i+j] = right[j]
+		j++
 	}
 	return sorted
-}
-
-func rest(slice []int) []int {
-	if len(slice) <= 1 {
-		return []int{}
-	}
-	return slice[1:]
 }

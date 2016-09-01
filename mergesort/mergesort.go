@@ -1,6 +1,6 @@
 package sort
 
-// Mergesort sorts an int slice using the mergesort algorithm
+// Mergesort sorts an int slice using the mergesort algorithm.
 func Mergesort(nums []int) []int {
 	n := len(nums)
 	// An empty slice or a slice with a single element is already sorted.

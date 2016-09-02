@@ -1,5 +1,7 @@
 package sort
 
+import "math/rand"
+
 // Quicksort sorts an int slice (in-place) using the quicksort algorithm.
 func Quicksort(nums []int) {
 	n := len(nums)
@@ -7,7 +9,8 @@ func Quicksort(nums []int) {
 		return
 	}
 	i, j := 0, n-1
-	pivot := nums[i]
+	// Pick a random pivot to ensure O(n*log(n)) time.
+	pivot := nums[rand.Intn(n)]
 	for {
 		for nums[i] < pivot {
 			i++
@@ -22,10 +25,6 @@ func Quicksort(nums []int) {
 		i++
 		j--
 	}
-	if j > 0 {
-		Quicksort(nums[:j+1])
-	}
-	if j+1 < n-1 {
-		Quicksort(nums[j+1 : n])
-	}
+	Quicksort(nums[:j+1])
+	Quicksort(nums[j+1 : n])
 }
